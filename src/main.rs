@@ -2,14 +2,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 
-extern crate json;
-
 fn main() {
-    /*
-    let args: Vec<String> = env::args().collect();
-    let raw_string = &args[1];
-    let _parsed = json::parse(raw_string).unwrap();
-     */
     let filename = "test_nippo.txt";
     println!("In file {}", filename);
 
