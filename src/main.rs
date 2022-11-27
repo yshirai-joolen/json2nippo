@@ -1,18 +1,29 @@
-use std::env;
+// use std::env;
+use std::fs::File;
+use std::io::prelude::*;
 
-#[macro_use]
 extern crate json;
 
 fn main() {
+    /*
     let args: Vec<String> = env::args().collect();
     let raw_string = &args[1];
-    let parsed = json::parse(raw_string).unwrap();
+    let _parsed = json::parse(raw_string).unwrap();
+     */
+    let filename = "test_nippo.txt";
+    println!("In file {}", filename);
+
+    let mut f = File::open(filename).expect("file not found");
+    let mut contents = String::new();
+    f.read_to_string(&mut contents)
+        .expect("something went wrong reading the file");
+    println!("With text:\n{}", contents);
 
     print_nippo_start();
 }
 
 fn print_nippo_start() {
-    println!("@山 @島 @swamp @平地");
+    println!("{}", construct_mention_raw(&["山", "島", "swamp", "平地"]).unwrap());
     println!("■本日の予定■");
     println!("（2021/10/27）11:30～20:00勤務予定");
     println!("◇APOCALYPSE");
