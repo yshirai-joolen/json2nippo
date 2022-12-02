@@ -1,13 +1,39 @@
 use std::fs::File;
 use std::io::prelude::*;
+use reqwest::Response;
 
 pub fn run(filename :&str) {
     let mut f = File::open(filename).expect("file not found");
     let mut contents = String::new();
     f.read_to_string(&mut contents)
         .expect("something went wrong reading the file");
-    println!("With text:\n{}", contents);
-    print_nippo_start();
+    //print_nippo_start();
+    let res = post_slack(contents);
+    println!("{:#?}", res.unwrap());
+}
+
+#[tokio::main]
+async fn post_slack(post_message :String) -> Result<Response, Box<dyn std::error::Error>> {
+    println!("With text:\n{}", post_message);
+
+    let url = "https://slack.com/api/chat.postMessage";
+    let token = "";
+    let channel = "";
+    let text = ":zombie:";
+
+    let params = [
+        ("url", url),
+        ("token", token),
+        ("channel", channel),
+        ("text", text),
+    ];
+
+    let client = reqwest::Client::new();
+    let resp = client.post(url)
+        .form(&params)
+        .send()
+        .await?;
+    Ok(resp)
 }
 
 pub fn print_nippo_start() {
