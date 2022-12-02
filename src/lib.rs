@@ -19,13 +19,13 @@ async fn post_slack(post_message :String) -> Result<Response, Box<dyn std::error
     let url = "https://slack.com/api/chat.postMessage";
     let token = "";
     let channel = "";
-    let text = ":zombie:";
+    let text = post_message;
 
     let params = [
         ("url", url),
         ("token", token),
         ("channel", channel),
-        ("text", text),
+        ("text", &text),
     ];
 
     let client = reqwest::Client::new();
